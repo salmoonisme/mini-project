@@ -1,0 +1,53 @@
+version: "3.8"
+
+services:
+  restaurant_app:
+    build:
+      dockerfile: Dockerfile
+      context: .
+    environment:
+      - NODE_ENV=production
+    ports:
+      - 4040:4040
+    depends_on:
+      - database_initial
+      - database_migration
+      - redis
+    command: sh -c 'npm run dev'
+    volumes:
+      - type: volume
+        source: restaurant_app_volume
+        target: /app/node_modules
+      - type: bind
+        source: .
+        target: /app
+
+  database_initial:
+    image: postgres:14
+    ports:
+      - 5435:5432
+    environment:
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=restaurant
+
+  database_migration:
+    build: 
+      dockerfile: Dockerfile
+      context: .
+    depends_on:
+      - database_initial
+    links:
+      - database_initial
+    command: sh -c "NODE_ENV=production npm run migrate"
+    restart: on-failure
+
+  redis:
+    image: redis
+    ports:
+      - 6379:6379
+    volumes:
+      - ./redis.conf:/usr/local/etc/redis/redis.conf
+    command: sh -c "redis-server"
+
+volumes:
+  restaurant_app_volume:

@@ -1,0 +1,34 @@
+{
+  "development": {
+    "username": "postgres",
+    "password": "postgres",
+    "database": "hangry_project",
+    "host": "localhost",
+    "dialect": "postgres",
+    "models-path": "db/models",
+    "migrations-path": "db/migrations",
+    "seeders-path": "db/seeders"
+  },
+  "test": {
+    "username": "postgres",
+    "password": "postgres",
+    "database": "hangry_project",
+    "host": "localhost",
+    "dialect": "postgres",
+    "models-path": "db/models",
+    "migrations-path": "db/migrations",
+    "seeders-path": "db/seeders"
+  },
+  "production": {
+    "username": "postgres",
+    "password": "postgres",
+    "database": "restaurant",
+    "host": "database_initial",
+    "dialect": "postgres",
+    "models-path": "db/models",
+    "migrations-path": "db/migrations",
+    "seeders-path": "db/seeders"
+  }
+}
+
+
